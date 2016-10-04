@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0">
+	<title>PlacingPics</title>
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	
+	<div class="container">
+		<div class="searchbar">
+			<form class="location-getter">
+				<input class="search" type="text" name="location">
+				<input class="submit" type="submit" value="submit">
+			</form>
+		</div>
+		
+		<div id="map"></div>
+		
+		<div class="pictures">
+			<d1 class="result-pics">
+				<dt></dt>
+				<dt></dt>
+			</d1>
+		</div>
+
+	</div>
+	
+	<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9IXJCq13F97SJC1Q5JP2qrLFvofkPycw&callback=initMap">
+    </script>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="js/app.js"></script>
+	
+</body>
+</html>
