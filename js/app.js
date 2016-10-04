@@ -11,21 +11,18 @@ var getPhotos = function(location) {
 	console.log(location);
 	//parameter to get Photos from 500px API
 	var params = {
-		key: 'xHkW9aeTnoYk4k1lUYicCjbKY9VXjYOWxE3OsBt8',
-		tagged: location,
-		site: '500px'
+		tag: location
 	};
 
 	$.ajax({
-		url: "https://api.500px.com/v1/",
+		url: "https://api.500px.com/v1/photos/search?consumer_key=jbENq5GFQfuSSut8cQQSbRH6sRjNoxVehMwJZIwp",
 		data: params,
-		dataType: "jsonp",
 		type: "GET"
-	})
+	});
 
 
 	$.getJSON(url, params, function(data) {
-		console.log(data.items);
+		console.log(data);
 	});
 };
 
