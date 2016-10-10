@@ -1,30 +1,55 @@
-var map;
-var initMap =  function() {
-	map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 2,
-		center: new google.maps.LatLng(2.8,-187.3),
-		mapTypeId: 'terrain'
+function initMap() {
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 8,
+		center: {lat: 40.7128, lng: -73.9352}
+	});
+
+	//geocoding area, when submit it finds address lat/long
+	var geocoder = new google.maps.Geocoder();
+
+	document.getElementById('submit').addEventListener('click', function() {
+			geocodeAddress(geocoder, map);
+			//getPhotos(map);
 	});
 };
 
-var showPictures = function(data) {
+function geocodeAddress(geocoder, resultsMap) {
+	var address = document.getElementById('address').value;
+	geocoder.geocode({'address': address}, function(results, status) {
+		if (status === 'OK') {
+			resultsMap.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+				map: resultsMap,
+				position: results[0].geometry.location
+			});
+			getPhotos(results);
+		} else {
+			alert('Geocode was not successful for the following reasons: ' + status);
+		}
+	});
+};
+
+function showPictures(data) {
 	var html = "";
-	$.each(data, function(index, value) {
+	$.each(data.photos, function(index, value) {
 		console.log(index);
 		console.log(value); 
-		html += '<img src="' + value.photos.images.url + '"/>';
-		console.log('The latitude is ' + value.photos.latitude);
-		console.log('The longitude is ' + value.photos.longitude);
+		html += '<img src="' + value.image_url + '"/>';
+		console.log('The latitude is ' + value.latitude);
+		console.log('The longitude is ' + value.longitude);
 	});
 	$('.pictures').html(html);
 };
 
-var getPhotos = function(location) {
+function getPhotos(results) {
+	console.log(results);
+	$('.pictures').html('');
+	var location = document.getElementById('address').value;
 	console.log(location);
 	//parameter to get Photos from 500px API
 	var params = {
 		tag: location,
-		part: 'photos'
+		part: 'photos'	
 	};
 
 	$.ajax({
@@ -42,11 +67,11 @@ var getPhotos = function(location) {
 	});
 };
 
-$(document).ready(function() {
-	$('.location-getter').submit( function(e) {
-		e.preventDefault();
-		$('.pictures').html('');
-		var location = $(this).find("input[name='location']").val();
-		getPhotos(location);
-	}); 
-});
+//$(document).ready(function() {
+//	$('.location-getter').submit( function(e) {
+//		e.preventDefault();
+//		$('.pictures').html('');
+//		var location = $(this).find("input[name='location']").val();
+//		getPhotos(location);
+//	}); 
+//});
