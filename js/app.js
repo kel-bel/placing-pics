@@ -2,7 +2,7 @@ function initMap() {
 	var startingLatLng = {lat: 40.7128, lng: -73.9352};
 
 	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 8,
+		zoom: 13,
 		center: startingLatLng
 	});
 
@@ -24,20 +24,23 @@ function geocodeAddress(geocoder, resultsMap) {
 			console.log(results[0].geometry.location);
 			resultsMap.setCenter(results[0].geometry.location);
 			getPhotosFromSource(address, resultsMap);
+			//making the marker for each photo
+			
+
 		} else {
 			alert('Please write a city name. Just the city name!')
 			console.log('Geocode was not successful for the following reasons: ' + status);
 		}
 	});
+	console.log(address);
 };
 
-function getPhotosFromSource(address, resultsMap) {
-	console.log(address);
-	console.log(resultsMap);
+function getPhotosFromSource(results) {
+	console.log(results);
 	$('.pictures').html('');
 	//parameter to get Photos from 500px API
 	var params = {
-		tag: address,
+		tag: results,
 		part: 'photos'	
 	};
 
@@ -63,20 +66,15 @@ function setPictures(data) {
 		console.log(value); 
 		html += '<img src="' + value.image_url + '"/>';
 		console.log('Latitude: ' + value.latitude + 'Longitude: ' + value.longitude);
-		
-		//add markers to each location on map
-		var marker = new google.maps.Marker({
-			map: map,
-			position: value.latitude + value.longitude,
-			icon: value.image_url
-		});
 
 		//to add the marker to the map, you must call setMap?
-		marker.setMap(map);
+		var marker = new google.maps.Marker({
+				setMap: map,
+				setPosition: value.latitude + value.longitude,
+				icon: value.image_url
+			});
+		//marker.setMap(map);
 	});
 	$('.pictures').html(html);
-
-	
-	
 };
 
