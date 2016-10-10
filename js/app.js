@@ -22,7 +22,7 @@ function geocodeAddress(geocoder, resultsMap) {
 				map: resultsMap,
 				position: results[0].geometry.location
 			});
-			getPhotos(results);
+			getPhotos(address);
 		} else {
 			alert('Geocode was not successful for the following reasons: ' + status);
 		}
@@ -41,14 +41,12 @@ function showPictures(data) {
 	$('.pictures').html(html);
 };
 
-function getPhotos(results) {
-	console.log(results);
+function getPhotos(address) {
+	console.log(address);
 	$('.pictures').html('');
-	var location = document.getElementById('address').value;
-	console.log(location);
 	//parameter to get Photos from 500px API
 	var params = {
-		tag: location,
+		tag: address,
 		part: 'photos'	
 	};
 
