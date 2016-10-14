@@ -11,7 +11,7 @@ function initMap() {
 
 	document.getElementById('submit').addEventListener('click', function() {
 		geocodeAddress(geocoder, map);
-	
+
 		//Identifying the given Lat and Longitude the map starts with	
 		console.log(startingLatLng);
 	});
@@ -23,29 +23,31 @@ function geocodeAddress(geocoder, resultsMap) {
 		if (status === 'OK') {
 			console.log(results[0].geometry.location);
 			resultsMap.setCenter(results[0].geometry.location);
-			getPhotosFromSource(address, resultsMap);
-			//making the marker for each photo
-			
+			var latitude = results[0].geometry.location.lat(); 
+			var longitude = results[0].geometry.location.lng();
 
+			//pass LatLng to the 500px API
+			//var radius = "25mi";
+			//var coordinates = [latitude,longitude,radius];
+			getPhotosFromSource(address);
 		} else {
 			alert('Please write a city name. Just the city name!')
 			console.log('Geocode was not successful for the following reasons: ' + status);
 		}
 	});
-	console.log(address);
 };
 
-function getPhotosFromSource(results) {
-	console.log(results);
+function getPhotosFromSource(address) {
+	//console.log(coordinates);
 	$('.pictures').html('');
 	//parameter to get Photos from 500px API
 	var params = {
-		tag: results,
-		part: 'photos'	
+		term: address,
+		rpp: 20	
 	};
 
 	$.ajax({
-		url: "https://api.500px.com/v1/photos/search?consumer_key=jbENq5GFQfuSSut8cQQSbRH6sRjNoxVehMwJZIwp",
+		url: "https://api.500px.com/v1/photos/search?consumer_key=QA8nE6OeeSK4t3WKeeVa8yJr1iKlSNOl7Tw7zfL4",
 		data: params,
 		dataType: "json",
 		type: "GET",
@@ -55,7 +57,6 @@ function getPhotosFromSource(results) {
 		console.log(data);
 		//show the pics from 500px 
 		setPictures(data);
-
 	});
 };
 
@@ -67,13 +68,14 @@ function setPictures(data) {
 		html += '<img src="' + value.image_url + '"/>';
 		console.log('Latitude: ' + value.latitude + 'Longitude: ' + value.longitude);
 
-		//to add the marker to the map, you must call setMap?
+		var locations = [value.latitude, value.longitude];
+
+		//to add the marker to the map
 		var marker = new google.maps.Marker({
-				setMap: map,
-				setPosition: value.latitude + value.longitude,
-				icon: value.image_url
-			});
-		//marker.setMap(map);
+			setMap: map,
+			setPosition: locations
+			//icon: value.image_url
+		});
 	});
 	$('.pictures').html(html);
 };
