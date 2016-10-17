@@ -11,10 +11,21 @@ function initMap() {
 
 	document.getElementById('submit').addEventListener('click', function() {
 		geocodeAddress(geocoder, map);
-
 		//Identifying the given Lat and Longitude the map starts with	
 		console.log(startingLatLng);
 	});
+
+	//identifying Markers
+	var keyWord = document.getElementById('address').value;
+	getPhotosFromSource(keyWord);
+	console.log(myLatLng);
+
+	var marker = new google.maps.Marker({
+		position: {lat: 40.7128, lng: -73.9352},
+		map: map
+		//icon: value.image_url
+	});
+	
 };
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -25,11 +36,6 @@ function geocodeAddress(geocoder, resultsMap) {
 			resultsMap.setCenter(results[0].geometry.location);
 			var latitude = results[0].geometry.location.lat(); 
 			var longitude = results[0].geometry.location.lng();
-
-			//pass LatLng to the 500px API
-			//var radius = "25mi";
-			//var coordinates = [latitude,longitude,radius];
-			getPhotosFromSource(address);
 		} else {
 			alert('Please write a city name. Just the city name!')
 			console.log('Geocode was not successful for the following reasons: ' + status);
@@ -37,12 +43,10 @@ function geocodeAddress(geocoder, resultsMap) {
 	});
 };
 
-function getPhotosFromSource(address) {
-	//console.log(coordinates);
-	$('.pictures').html('');
+function getPhotosFromSource(keyWord) {
 	//parameter to get Photos from 500px API
 	var params = {
-		term: address,
+		term: keyWord,
 		rpp: 20	
 	};
 
@@ -56,27 +60,21 @@ function getPhotosFromSource(address) {
 	.done( function(data) {
 		console.log(data);
 		//show the pics from 500px 
-		setPictures(data);
-	});
-};
+		var html = "";
+		$.each(data.photos, function(index, value) {
+			//console.log(index);
+			//console.log(value); 
+			html += '<img src="' + value.image_url + '"/>';
+			//console.log('Latitude: ' + value.latitude + 'Longitude: ' + value.longitude);
 
-function setPictures(data) {
-	var html = "";
-	$.each(data.photos, function(index, value) {
-		console.log(index);
-		console.log(value); 
-		html += '<img src="' + value.image_url + '"/>';
-		console.log('Latitude: ' + value.latitude + 'Longitude: ' + value.longitude);
-
-		var locations = [value.latitude, value.longitude];
-
-		//to add the marker to the map
-		var marker = new google.maps.Marker({
-			setMap: map,
-			setPosition: locations
-			//icon: value.image_url
+			$('.pictures').html(html);
+			//Grabbing lat and long of pictures
+			var myLatLng = {lat: 40.71, lng: -73.9};
+			return myLatLng;
 		});
 	});
-	$('.pictures').html(html);
 };
+
+
+
 
