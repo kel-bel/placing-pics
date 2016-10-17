@@ -11,14 +11,13 @@ function initMap() {
 
 	document.getElementById('submit').addEventListener('click', function() {
 		geocodeAddress(geocoder, map);
-		//Identifying the given Lat and Longitude the map starts with	
-		console.log(startingLatLng);
 	});
 
 	//identifying Markers
 	var keyWord = document.getElementById('address').value;
 	getPhotosFromSource(keyWord);
-	console.log(myLatLng);
+	//var gettingCoord = getPhotosFromSource();
+	//return parseFloat(gettingCoord[0]) + parseFloat(gettingCoord[1]);
 
 	var marker = new google.maps.Marker({
 		position: {lat: 40.7128, lng: -73.9352},
@@ -50,7 +49,7 @@ function getPhotosFromSource(keyWord) {
 		rpp: 20	
 	};
 
-	$.ajax({
+	return $.ajax({
 		url: "https://api.500px.com/v1/photos/search?consumer_key=QA8nE6OeeSK4t3WKeeVa8yJr1iKlSNOl7Tw7zfL4",
 		data: params,
 		dataType: "json",
@@ -69,9 +68,11 @@ function getPhotosFromSource(keyWord) {
 
 			$('.pictures').html(html);
 			//Grabbing lat and long of pictures
-			var myLatLng = {lat: 40.71, lng: -73.9};
-			return myLatLng;
+			var Lat = 40.71;
+			var Lng = -73.9;
+			//return [Lat, Lng];
 		});
+		console.log(Lat);
 	});
 };
 
