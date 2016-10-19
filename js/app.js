@@ -26,18 +26,17 @@ function initMap() {
 
 			$('.pictures').html(html);
 			//Grabbing lat and long of pictures
-			Lat = 40.71;
-			Lng = -73.9;
-		});
-		console.log(Lat);
-	});
+			Lat = value.latitude;
+			Lng = value.longitude;
 
-	var marker = new google.maps.Marker({
-		position: {lat: 40.7128, lng: -73.9352},
-		map: map
-		//icon: value.image_url
+			var latlng = new google.maps.LatLng(Lat, Lng);
+			var marker = new google.maps.Marker({
+				position: latlng,
+				map: map
+				//icon: value.image_url
+			});
+		});
 	});
-	
 };
 
 function geocodeAddress(geocoder, resultsMap) {
