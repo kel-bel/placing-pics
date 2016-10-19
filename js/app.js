@@ -1,7 +1,7 @@
 function initMap() {
 	var startingLatLng = {lat: 40.7128, lng: -73.9352};
 	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 13,
+		zoom: 12,
 		center: startingLatLng
 	});
 
@@ -21,19 +21,19 @@ function initMap() {
 		$.each(data.photos, function(index, value) {
 			//console.log(index);
 			//console.log(value); 
-			html += '<img src="' + value.image_url + '"/>';
-			//console.log('Latitude: ' + value.latitude + 'Longitude: ' + value.longitude);
-
-			$('.pictures').html(html);
+			//html += '<img src="' + value.image_url + '"/>';
+			//$('.pictures').html(html);
 			//Grabbing lat and long of pictures
 			Lat = value.latitude;
 			Lng = value.longitude;
 
+			var eachPic = value.image_url;
+			console.log(eachPic);
 			var latlng = new google.maps.LatLng(Lat, Lng);
 			var marker = new google.maps.Marker({
 				position: latlng,
-				map: map
-				//icon: value.image_url
+				map: map,
+				icon: eachPic
 			});
 		});
 	});
