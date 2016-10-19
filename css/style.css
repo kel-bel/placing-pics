@@ -11,12 +11,43 @@ html, body {
 	box-sizing: inherit;
 }
 
+input {
+	font: 24px/24px 'Roboto', sans-serif;
+	padding: 5px;
+	color: #1C1A17;
+	line-height: 30px;
+}
+
+input.address {
+	width: 360px;
+	background-color: #F0F7F4;
+	border: 3px solid #1C1A17;
+	border-radius: 5px;
+	height: 60px;
+}
+
+input.submit {
+	width: 100px;
+	background-color: #BF5757;
+	border: 3px solid #1C1A17;
+	border-radius: 30px;
+	height: 70px;
+}
+
 .container {
 	height: 100%;
 	width: 100%;
 }
 
 #map {
-	height: 500px;
-	width: 1000px;
+	height: 930px;
+	width: 100%;
+	position: relative;
+}
+
+.searchbar {
+	z-index: 2;
+	position: absolute;
+	margin-left: 40px;
+	margin-top: 60px;
 }

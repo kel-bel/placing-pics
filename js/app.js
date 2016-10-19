@@ -1,7 +1,7 @@
 function initMap() {
-	var startingLatLng = {lat: 40.7128, lng: -73.9352};
+	var startingLatLng = {lat: 40.7531, lng: -73.9612};
 	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 12,
+		zoom: 13,
 		center: startingLatLng
 	});
 
@@ -9,32 +9,33 @@ function initMap() {
 	var geocoder = new google.maps.Geocoder();
 	document.getElementById('submit').addEventListener('click', function() {
 		geocodeAddress(geocoder, map);
-	});
+	
 
-	//identifying Markers
-	var keyWord = document.getElementById('address').value;
-	var displayOnMap = getPhotosFromSource(keyWord);
-	console.log(displayOnMap);
-	displayOnMap.done( function(data) {
-		console.log(data);
-		var html = "";
-		$.each(data.photos, function(index, value) {
-			//console.log(index);
-			//console.log(value); 
-			//html += '<img src="' + value.image_url + '"/>';
-			//$('.pictures').html(html);
-			//Grabbing lat and long of pictures
-			Lat = value.latitude;
-			Lng = value.longitude;
+		//identifying Markers
+		var keyWord = document.getElementById('address').value;
+		var displayOnMap = getPhotosFromSource(keyWord);
+		console.log(displayOnMap);
+		displayOnMap.done( function(data) {
+			console.log(data);
+			var html = "";
+			$.each(data.photos, function(index, value) {
+				//console.log(index);
+				//console.log(value); 
+				//html += '<img src="' + value.image_url + '"/>';
+				//$('.pictures').html(html);
+				//Grabbing lat and long of pictures
+				Lat = value.latitude;
+				Lng = value.longitude;
 
-			var eachPic = value.image_url;
-			console.log(eachPic);
-			var latlng = new google.maps.LatLng(Lat, Lng);
-			var marker = new google.maps.Marker({
-				position: latlng,
-				map: map,
-				icon: eachPic
-			});
+				var eachPic = value.image_url;
+				console.log(eachPic);
+				var latlng = new google.maps.LatLng(Lat, Lng);
+				var marker = new google.maps.Marker({
+					position: latlng,
+					map: map,
+					icon: eachPic
+				});
+			});	
 		});
 	});
 };
