@@ -12,26 +12,43 @@ html, body {
 }
 
 input {
-	font: 24px/24px 'Roboto', sans-serif;
+	font: 22px/22px 'Abel', sans-serif;
 	padding: 5px;
 	color: #1C1A17;
-	line-height: 30px;
+	line-height: 26px;
+}
+
+h1 {
+	font: 60px/60px 'Oswald', sans-serif;
+	color: #1C1A17;
+}
+
+p {
+	font: 20px/20px 'Abel', sans-serif;
+	color: #1C1A17;
 }
 
 input.address {
-	width: 360px;
-	background-color: #F0F7F4;
+	width: 340px;
+	background-color: #fff;
 	border: 3px solid #1C1A17;
 	border-radius: 5px;
-	height: 60px;
+	height: 50px;
 }
 
 input.submit {
-	width: 100px;
+	width: 90px;
 	background-color: #BF5757;
 	border: 3px solid #1C1A17;
 	border-radius: 30px;
-	height: 70px;
+	height: 60px;
+}
+
+.columnOne {
+	width: 25%;
+	height: 930px;
+	float: left;
+	padding: 10px 10px;
 }
 
 .container {
@@ -41,13 +58,24 @@ input.submit {
 
 #map {
 	height: 930px;
-	width: 100%;
+	width: 75%;
+	float: right;
 	position: relative;
 }
 
 .searchbar {
 	z-index: 2;
-	position: absolute;
-	margin-left: 40px;
+	margin-left: 10px;
 	margin-top: 60px;
+}
+
+.information {
+	z-index: 2;
+	margin-left: 20px;
+	margin-top: 30px;
+}
+
+.title {
+	z-index: 2;
+	margin-left: 15px;
 }

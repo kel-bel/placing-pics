@@ -14,15 +14,14 @@ function initMap() {
 		//identifying Markers
 		var keyWord = document.getElementById('address').value;
 		var displayOnMap = getPhotosFromSource(keyWord);
-		console.log(displayOnMap);
 		displayOnMap.done( function(data) {
 			console.log(data);
 			var html = "";
 			$.each(data.photos, function(index, value) {
 				//console.log(index);
 				//console.log(value); 
-				//html += '<img src="' + value.image_url + '"/>';
-				//$('.pictures').html(html);
+				html += '<img src="' + value.image_url + '"/>';
+				$('.pictures').html(html);
 				//Grabbing lat and long of pictures
 				Lat = value.latitude;
 				Lng = value.longitude;
